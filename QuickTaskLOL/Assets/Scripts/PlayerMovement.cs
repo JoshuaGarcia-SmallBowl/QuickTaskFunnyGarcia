@@ -12,12 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 movement;
 
-    private CharacterController characterController;
-    
+    private Rigidbody rb;
+
 
     void Start()
     {
-        characterController = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -27,11 +27,16 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                
+                rb.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+                grounded = false;
             }
         }
-        movement = new Vector3(horizontal, 0, 0).normalized * speed * Time.deltaTime;
-        characterController.Move(movement);
+        rb.velocity = new Vector3(horizontal * speed, rb.velocity.y, 0);
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        grounded = true;
     }
 }
