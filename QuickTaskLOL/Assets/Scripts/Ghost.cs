@@ -26,13 +26,13 @@ public class Ghost : MonoBehaviour
 
                 transform.position = player.transform.position;
                 player.transform.position = origin;
-
+                colliding = false;
 
             }
         }
         
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         colliding = true;
     }
